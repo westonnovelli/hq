@@ -1,0 +1,59 @@
+---
+
+---
+
+<div class="outer border">
+  <div class="left">
+    <div class="large border"></div>
+    <div class="small border"></div>
+    <div class="small border"></div>
+  </div>
+  <div class="center border"></div>
+  <div class="right">
+    <div class="cell border"></div>
+    <div class="cell border"></div>
+    <div class="cell border"></div>
+  </div>
+</div>
+
+
+<style>
+  div {
+      box-sizing: border-box;
+  }
+
+  .outer {
+      margin: 24px 0;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 8px;
+      height: 200px;
+      padding: 8px;
+  }
+
+  .left, .right, .center {
+  }
+
+  .border {
+      border: 2px solid white;
+      border-radius: 8px;
+  }
+
+  .left {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 8px;
+  }
+
+  .large {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+  }
+
+  .right {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 8px;
+  }
+</style>
