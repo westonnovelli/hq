@@ -1,0 +1,102 @@
+---
+import CodeIcon from '../components/CodeIcon.astro'
+import TimelineIcon from '../components/TimelineIcon.astro'
+import ArchitectureIcon from '../components/ArchitectureIcon.astro'
+import BusinessIcon from '../components/BusinessIcon.astro'
+
+import Header from '../components/header.astro'
+import PageHead from '../components/PageHead.astro'
+// Welcome to Astro! Everything between these triple-dash code fences
+// is your "component frontmatter". It never runs in the browser.
+console.log('This runs in your terminal, not the browser!');
+---
+<!-- Below is your "component template." It's just HTML, but with
+     some magic sprinkled in to help you build great templates. -->
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <Header/>
+    <PageHead>
+      <h1>Getting started</h1>
+    </PageHead>
+    <div class="content">   
+      <p>I build UIs for people trying to get things done.</p>
+      <p>With primary experience building enterprise web UIs with React, my goal help people accomplish their tasks by crafting high quality tools that they can rely on.</p>
+
+      <div class="selling-point"><CodeIcon class="icon"/><span>Software Engineering</span></div>
+      <div class="selling-point"><TimelineIcon class="icon"/><span>Project Manager</span></div>
+      <div class="selling-point"><ArchitectureIcon class="icon"/><span>Architecture</span></div>
+      <div class="selling-point"><BusinessIcon class="icon"/><span>Business Value</span></div>
+      <p>Preview my thoughts on the following</p>
+      <div class="thoughts"><a href="/thoughts/scaling">Scaling</a><a href="/thoughts/abstraction">Abstraction</a><a href="/thoughts/testing">Testing</a></div>
+    </div>
+  </body>
+</html>
+<style>
+  body {
+    --color1: #434E5F;
+    --color2: #536C98;
+    --color3: #2F7BE3;
+    --color4: #62B0F4;
+    --color5: #ADB1C5;
+
+    --background: var(--color1);
+    --text-primary: #FFFFFF;
+    --text-subtle: var(--color5);
+    --border: var(--color4);
+    --action-primary: var(--color3);
+    --background-alt: var(--color2);
+
+    background: var(--color1);
+    font-family: 'Rubik', sans-serif;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    font-size: 10px;
+  }
+
+  h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 5rem;
+  }
+  
+  .content {
+      padding: 24px;
+      font-size: 2rem;
+  }
+
+  .selling-point {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      font-size: 24px;
+  }
+
+  .selling-point .icon {
+     color: var(--text-subtle);
+  }
+
+  .thoughts {
+      display: flex;
+      gap: 24px;
+  }
+
+  .thoughts a {
+      color: var(--text-primary);
+      padding: 8px 16px;
+      border-radius: 3px;
+      background: var(--background-alt);
+      text-decoration: none;
+  }
+</style>
+

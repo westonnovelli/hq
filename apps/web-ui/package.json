@@ -1,0 +1,14 @@
+{
+  "name": "web-ui",
+  "packageManager": "yarn@3.6.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^2.7.1",
+    "typescript": "^5.1.6"
+  }
+}
