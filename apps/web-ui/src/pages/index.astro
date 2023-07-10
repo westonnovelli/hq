@@ -1,5 +1,6 @@
 ---
 import Navbar from '../components/navbar.astro'
+import Header from '../components/header.astro'
 
 // Welcome to Astro! Everything between these triple-dash code fences
 // is your "component frontmatter". It never runs in the browser.
@@ -13,9 +14,33 @@ console.log('This runs in your terminal, not the browser!');
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
   </head>
-  <body class="h-screen flex">
+  <body class="h-screen flex bg-color2">
     <Navbar location="Home"/>
-    <div class="container w-full h-full bg-color2"></div>
+    <div class="container mx-auto px-2 h-full flex flex-col bg-color2">
+       <Header>Getting Started</Header> 
+       <div class="mx-auto py-5 flex flex-col items-center">
+           <div class="text-5xl py-2">WN</div>
+           <div class="text-2xl text-neutral-100">Weston Novelli</div>
+           <div class="text-sm text-neutral-100">UI Software Engineer</div>
+        </div>
+        <div class="flex w-full gap-2">
+           <div class="p-4 bg-color1 basis-4/6 rounded text-neutral-100">
+             <p>I build <span class="underline decoration-color4">UI</span>s for the <span class="underline decoration-color4">web</span>.</p>
+             <div class="mt-4 border-t border-color4">
+               <div class="flex mt-4 mb-1"><div class="bg-color3 p-1 text-xs rounded">Mission</div></div>
+               <p>With primary experience building enterprise apps for the web, I target building tools that help people do their jobs.
+                  This means the UIs must be quality, performant, and strike the balance between simple and sophisticated. Let's get to work!
+               </p>
+             </div>
+           </div>
+           <div class="p-4 bg-color1 basis-2/6 rounded text-neutral-100">
+             <h2 class="font-semibold mb-2">Why the UI Engineer?</h2>
+             <p>The UI Engineer is optimally placed as the joint between <span class="underline decoration-color4">Product</span>, <span class="underline decoration-color4">Design</span>, and the rest of <span class="underline decoration-color4">Engineering</span>.
+                We thrive when we are given the whole picture of the Product Delivery journey.
+             </p>
+           </div>
+        </div>
+    </div>
   </body>
 </html>
 <style>

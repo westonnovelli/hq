@@ -2299,6 +2299,7 @@ __metadata:
   resolution: "hq@workspace:."
   dependencies:
     prettier: ^2.8.8
+    prettier-plugin-astro: ^0.10.0
     turbo: ^1.10.6
   languageName: unknown
   linkType: soft
@@ -3962,6 +3963,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier-plugin-astro@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "prettier-plugin-astro@npm:0.10.0"
+  dependencies:
+    "@astrojs/compiler": ^1.5.0
+    prettier: ^2.8.8
+    sass-formatter: ^0.7.6
+  checksum: 4cb68c274dde64e42c1e2eb080ecd70c79fbcdef6ab4ba40f5d9e246ac794842d36534b82c5231d59d0536e70de1502c9f4fe9a603897a38606339868749d5e3
+  languageName: node
+  linkType: hard
+
 "prettier-plugin-astro@npm:^0.9.1":
   version: 0.9.1
   resolution: "prettier-plugin-astro@npm:0.9.1"
@@ -4315,7 +4327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-formatter@npm:^0.7.5":
+"sass-formatter@npm:^0.7.5, sass-formatter@npm:^0.7.6":
   version: 0.7.6
   resolution: "sass-formatter@npm:0.7.6"
   dependencies:
