@@ -1,0 +1,16 @@
+---
+
+interface Props {
+    to?: string;
+    active?: boolean;
+}
+
+const { to = '#', active = false, class: className } = Astro.props;
+---
+
+<a
+  class={`${className} flex items-center justify-center w-12 h-12 mt-2 rounded ${active ? 'bg-color4' : 'hover:bg-color2 hover:text-neutral-100'}`}
+  href={to}>
+  <slot/>
+</a>
+
