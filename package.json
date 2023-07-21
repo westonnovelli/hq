@@ -12,7 +12,7 @@
     "build": "turbo build"
   },
   "devDependencies": {
-    "turbo": "^1.10.6"
+    "turbo": "latest"
   },
   "dependencies": {
     "prettier": "^2.8.8",
