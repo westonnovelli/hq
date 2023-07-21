@@ -1,0 +1,22 @@
+{
+  "name": "react-demo",
+  "packageManager": "yarn@3.6.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspack serve",
+    "start": "",
+    "build": "rspack build",
+    "preview": ""
+  },
+  "devDependencies": {
+    "@rspack/cli": "^0.2.8",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "path": "^0.12.7",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

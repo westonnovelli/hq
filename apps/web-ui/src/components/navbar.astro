@@ -1,9 +1,11 @@
 ---
+import type { routes } from '../routes.ts';
 import NavLink from './navlink.astro';
 import TitleIcon from './TitleIcon.astro';
+import ArchitectureIcon from './ArchitectureIcon.astro';
 
 interface Props {
-    location: 'Home' | 'Title';
+    location: routes;
 }
 
 const { location } = Astro.props;
@@ -21,8 +23,11 @@ const { location } = Astro.props;
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
         </NavLink>
-        <NavLink to="layout" active={location === 'Title'}>
+        <NavLink to="/profile" active={location === 'Profile'}>
             <TitleIcon/>
+        </NavLink>
+        <NavLink to="/showcase" active={location === 'Showcase'}>
+            <ArchitectureIcon/>
         </NavLink>
     </div>
     <div class="flex flex-col items-center mt-3 border-t border-color2">

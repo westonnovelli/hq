@@ -1,6 +1,5 @@
 ---
-import Navbar from '../components/navbar.astro'
-import Header from '../components/header.astro'
+import Page from '../components/scaffold/page.astro';
 
 // Welcome to Astro! Everything between these triple-dash code fences
 // is your "component frontmatter". It never runs in the browser.
@@ -8,18 +7,8 @@ console.log('This runs in your terminal, not the browser!');
 ---
 <!-- Below is your "component template." It's just HTML, but with
      some magic sprinkled in to help you build great templates. -->
-<html>
-  <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-  </head>
-  <body class="h-screen flex bg-color2">
-    <Navbar location="Home"/>
-    <div class="px-2 pb-4 h-full w-full flex flex-col bg-color2 overflow-auto">
-        <div class="container mx-auto">
-       <Header>Getting Started</Header> 
-       <div class="mx-auto pb-5 flex flex-col items-center">
+<Page location="Home" title="Getting Started">
+  <div class="mx-auto pb-5 flex flex-col items-center">
            <div class="text-5xl py-2">WN</div>
            <div class="text-3xl text-neutral-100">Weston Novelli</div>
            <div class="text-sm text-neutral-100">UI Software Engineer</div>
@@ -70,15 +59,6 @@ console.log('This runs in your terminal, not the browser!');
              </div>
            </div>
         </div>
-        </div>
-    </div>
-  </body>
-</html>
-<style>
-  body {
-    font-family: 'Rubik', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-</style>
+</Page>
+
 

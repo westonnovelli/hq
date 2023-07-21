@@ -1,0 +1,13 @@
+error[internal]: Failed to resolve react-dom/client in typescriptx|/home/corridore/_code/hq/packages/react-demo/src/index.ts
+
+
+
+error[internal]: Failed to resolve react/jsx-runtime in typescriptx|/home/corridore/_code/hq/packages/react-demo/src/App.tsx
+
+
+
+error[internal]: Failed to resolve react in typescriptx|/home/corridore/_code/hq/packages/react-demo/src/App.tsx
+
+
+
+rspack compiled with 3 errors in 44 ms
