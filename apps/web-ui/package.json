@@ -1,6 +1,8 @@
 {
-  "name": "web-ui",
+  "name": "@corr-hq/web-ui",
   "packageManager": "yarn@3.6.0",
+  "private": true,
+  "version": "0.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -8,11 +10,18 @@
     "preview": "astro preview"
   },
   "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "astro": "^2.7.1",
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@astrojs/react": "^2.2.1",
     "@astrojs/tailwind": "^4.0.0",
+    "@corr-hq/react-demo": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "tailwindcss": "^3.3.2"
   }
 }
