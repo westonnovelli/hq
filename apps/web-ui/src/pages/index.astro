@@ -1,5 +1,6 @@
 ---
 import Page from '../components/scaffold/page.astro';
+import Logo from '../components/Logo.astro';
 
 // Welcome to Astro! Everything between these triple-dash code fences
 // is your "component frontmatter". It never runs in the browser.
@@ -9,7 +10,8 @@ console.log('This runs in your terminal, not the browser!');
      some magic sprinkled in to help you build great templates. -->
 <Page location="Home" title="Getting Started">
   <div class="mx-auto pb-5 flex flex-col items-center">
-           <div class="text-5xl py-2">WN</div>
+<!--           <div class="text-5xl py-2">WN</div>-->
+           <Logo height={100} width={100}/>
            <div class="text-3xl text-neutral-100">Weston Novelli</div>
            <div class="text-sm text-neutral-100">UI Software Engineer</div>
         </div>
@@ -18,9 +20,9 @@ console.log('This runs in your terminal, not the browser!');
            <div class="p-4 bg-color1 rounded text-neutral-100">
            <p class="text-xl">I build <span class="underline decoration-color4">UI</span>s for the <span class="underline decoration-color4">web</span>.</p>
                  <div class="mt-4 pt-8 pb-4 border-t border-color4 flex justify-evenly">
+                   <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200" href="/profile">Profile</a>
                    <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200" href="/showcase">Showcase</a> 
-                   <!-- <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200">Projects</a> -->
-                   <a class="px-4 py-2 rounded bg-color3">Thoughts</a> 
+                   <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200" href="/thoughts">Thoughts</a> 
                  </div>
              <div class="mt-4 border-t border-color4">
                <div class="flex mt-4 mb-1"><div class="bg-color4 p-1 text-xs text-neutral-950 rounded">Mission</div></div>
