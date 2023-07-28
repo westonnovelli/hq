@@ -1,0 +1,14 @@
+---
+import Page from '../scaffold/page.astro';
+
+interface Props {
+    title: string;
+}
+
+const { frontmatter: { title } } = Astro.props;
+---
+
+<Page location="" title={title}>
+    <slot/>
+</Page>
+

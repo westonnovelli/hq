@@ -1,8 +1,19 @@
 ---
 import Page from '../components/scaffold/page.astro';
 
+const posts = await Astro.glob('./thoughts/*.md');
+const displayPosts = posts
+    .filter(({ frontmatter: { draft = false }}) => !draft)
+    .sort((a, b) => new Date(b.frontmatter.publishedDate).valueOf() - new Date(a.frontmatter.publishedDate).valueOf());
 ---
 
 <Page location="Thoughts" title="Configuration">
-  this will become the blog space, small articles on tech/ui things
+<div class="text-neutral-100 my-4">
+  The following posts contain my thoughts at the time of authorship.
+</div>
+<div>
+  {displayPosts.map((post) => (
+      <div>{JSON.stringify(post)}</div>
+  ))}
+</div>
 </Page>
