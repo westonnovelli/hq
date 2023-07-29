@@ -1,9 +1,9 @@
 ---
 import Page from '../components/scaffold/page.astro';
-import DemoApp from '@corr-hq/react-demo';
+import { App } from '@corr-hq/react-demo';
 ---
 <Page location="Showcase" title="Showcase">
   <div class="text-neutral-100">
-      <DemoApp client:load/>
+      <App client:load/>
  </div> 
 </Page>
