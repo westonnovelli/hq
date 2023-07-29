@@ -20,6 +20,9 @@ const displayPosts = posts
             <div class="text-neutral-400" >{date}</div> 
         </a>
       );
-   })}
+   })} 
 </div>
+{displayPosts.length === 0 &&
+    <div>No thoughts yet, don't hold your breath.</div>
+}
 </Page>
