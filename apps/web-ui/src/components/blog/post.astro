@@ -1,14 +1,14 @@
 ---
 import Page from '../scaffold/page.astro';
 
-interface Props {
-    title: string;
-}
-
-const { frontmatter: { title } } = Astro.props;
+const { frontmatter: { title, publishedDate } } = Astro.props;
+const date = new Date(publishedDate).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}); 
 ---
 
 <Page location="" title={title}>
-    <slot/>
+  <div class="text-neutral-100 text-sm mb-4">{date}</div>
+  <div class="text-neutral-100">
+      <slot/>
+  </div>
 </Page>
 
