@@ -2,48 +2,61 @@
 import type { routes } from '../routes.ts';
 import NavLink from './navlink.astro';
 import Logo from './Logo.astro';
+import MenuIcon from './MenuIcon.astro';
 import TitleIcon from './TitleIcon.astro';
 import ArchitectureIcon from './ArchitectureIcon.astro';
 import TimelineIcon from './TimelineIcon.astro';
 
 interface Props {
     location: routes;
+    class?: string;
+    short?: boolean;
 }
 
-const { location } = Astro.props;
+const { location, class: className, short = false } = Astro.props;
 ---
 
-<div class="flex flex-col items-center w-16 h-full overflow-hidden text-neutral-100 bg-color1">
-    <div class="flex items-center justify-center mt-3">
-        <Logo height={32} width={32}24 />
+<div class={`${className} flex-col items-center w-full md:w-16 h-full overflow-hidden text-neutral-100 bg-color1`}>
+    <div class={`flex items-center mt-3 ${short ? 'justify-between px-2' : 'justify-center'}`}>
+        <Logo height={32} width={32} />
+        {short && <div class="md:hidden">Weston Novelli</div>}
+        {short && <button id="menu-close" class="w-8 flex md:hidden items-center justify-center hover:bg-color3"><MenuIcon height={28} width={28} class="text-neutral-100"/></button>}
     </div>
     <div class="flex flex-col items-center mt-3 border-t border-color2">
         <NavLink to="/" active={location === 'Home'}>
             <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
+            <div class="md:hidden">Home</div>
         </NavLink>
         <NavLink to="/profile" active={location === 'Profile'}>
-            <TitleIcon/>
+            <TitleIcon/><div class="md:hidden">Profile</div>
         </NavLink>
         <NavLink to="/showcase" active={location === 'Showcase'}>
-            <ArchitectureIcon/>
+            <ArchitectureIcon/><div class="md:hidden">Showcase</div>
         </NavLink>
         <NavLink to="/thoughts" active={location === 'Thoughts'}>
-            <TimelineIcon/>
+            <TimelineIcon/><div class="md:hidden">Thoughts</div>
         </NavLink>
     </div>
-    <div class="flex flex-col items-center mt-3 border-t border-color2">
+<!--    <div class="flex flex-col items-center mt-3 border-t border-color2">
       <div class="flex items-center justify-center w-12 h-12 bg-color1 text-neutral-100">1</div>
       <div class="flex items-center justify-center w-12 h-12 bg-color2 text-neutral-100">2</div>
       <div class="flex items-center justify-center w-12 h-12 bg-color3 text-neutral-100">3</div>
       <div class="flex items-center justify-center w-12 h-12 bg-color4 text-neutral-950">4</div>
       <div class="flex items-center justify-center w-12 h-12 bg-color5 text-neutral-950">5</div>
-    </div>
-    <a class="flex items-center justify-center w-16 h-16 mt-auto bg-gray-800 hover:bg-color2 hover:text-neutral-100" href="#">
+    </div> -->
+<!--    <a class="flex items-center justify-center w-16 h-16 mt-auto bg-gray-800 hover:bg-color2 hover:text-neutral-100" href="#">
         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
-    </a>
+    </a> -->
 </div>
 
+<script>
+const buttonClose = document.querySelector('#menu-close');
+
+buttonClose.addEventListener("click", () => {
+    document.documentElement.classList.toggle("mobile-sidebar-toggle");
+});
+</script>
