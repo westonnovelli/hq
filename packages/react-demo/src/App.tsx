@@ -1,12 +1,13 @@
 import React from "react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import Starships from "./components/Starships";
+import colors from "./util/colors";
 
 const DemoApp: React.FC = () => {
   return (
     <ChakraProvider>
-      <div>DemoApp</div>
-      <Starships />
+      <Box color={colors.color5}>Coming soon</Box>
+      {/* <Starships /> */}
     </ChakraProvider>
   );
 };
