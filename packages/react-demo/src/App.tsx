@@ -1,10 +1,14 @@
-import React from 'react';
+import React from "react";
+import { ChakraProvider } from "@chakra-ui/react";
+import Starships from "./components/Starships";
 
 const DemoApp: React.FC = () => {
-    return (
-        <div>DemoApp</div>
-    );
+  return (
+    <ChakraProvider>
+      <div>DemoApp</div>
+      <Starships />
+    </ChakraProvider>
+  );
 };
 
 export default DemoApp;
-

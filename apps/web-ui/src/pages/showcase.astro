@@ -1,9 +1,34 @@
 ---
-import Page from '../components/scaffold/page.astro';
-import { App } from '@corr-hq/react-demo';
+import Page from "../components/scaffold/page.astro";
+import AppLink from "../components/AppLink.astro";
+import { App } from "@corr-hq/react-demo";
 ---
+
 <Page location="Showcase" title="Showcase">
-  <div class="text-neutral-100">
-      <App client:load/>
- </div> 
+  <div class="text-neutral-100 flex flex-col lg:flex-row w-full gap-2">
+    <div class="basis-0 lg:basis-4/6">
+      <App client:load />
+    </div>
+    <div class="basis-0 lg:basis-2/6 flex flex-col gap-2 p-4 bg-color1 rounded">
+      <h2 class"text-neutral-100 mb-2">Check out some other projects</h2>
+      <hr class="text-neutral-500" />
+      <AppLink
+        title="Wiffle Ball Scoring App"
+        imgSrc="/wiffle-ss.png"
+        url="https://cpwiffleball.novelli.dev"
+      />
+      <hr class="text-neutral-500 mt-2" />
+      <AppLink
+        title="Project Actuator"
+        imgSrc="/project-actuator.png"
+        url="https://westonnovelli.github.io/project-actuator/"
+      />
+      <hr class="text-neutral-500 mt-2" />
+      <AppLink
+        title="Iradonian Co"
+        imgSrc="/iradonianco.png"
+        url="https://iradonianco.corridore.dev/tw/current"
+      />
+    </div>
+  </div>
 </Page>
