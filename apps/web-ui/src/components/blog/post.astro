@@ -1,14 +1,30 @@
 ---
 import Page from '../scaffold/page.astro';
 
-const { frontmatter: { title, publishedDate } } = Astro.props;
-const date = new Date(publishedDate).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}); 
+const {
+  frontmatter: { title, publishedDate },
+} = Astro.props;
+const date = new Date(publishedDate).toLocaleDateString('en-us', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
 ---
+
+<style is:global>
+  h1 {
+    font-size: xx-large !important;
+  }
+
+  p {
+    margin-bottom: 12px !important;
+  }
+</style>
 
 <Page location="" title={title}>
   <div class="text-neutral-100 text-sm mb-4">{date}</div>
-  <div class="text-neutral-100">
-      <slot/>
-  </div>
+  <article class="text-neutral-100">
+    <slot />
+  </article>
 </Page>
-

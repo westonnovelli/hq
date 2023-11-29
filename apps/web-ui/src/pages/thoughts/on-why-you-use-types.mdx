@@ -1,0 +1,40 @@
+---
+layout: "../../components/blog/post.astro"
+title: "On why you use types"
+publishedDate: "Tue Nov 28 09:58:22 PM CST 2023"
+draft: false
+---
+
+# Context
+
+Web UIs = javascript; typescript helps you write better javascript over time, at scale.
+
+# Take care of your future self, and your team
+
+When you build something for a customer, a lot of what you do is for the end user.
+An experienced craftsman knows when to take time to build a something that helps
+him build the end product better, faster, and to a higher quality.
+
+Types (and a compiler) are a tool to offload work to the computer, and Typescript
+does that job very well, if you let it. The following are some high level thoughts
+on how to leverage types for the builder's benefit (lest it not be obvious).
+
+[insert famous quote about clearly deriving flowcharts from tables] (sic) The UI
+spends most of its time transforming data in some system into a form made for humans.
+In the world of React, the end result (for the interesting part of the conversation)
+comes in the form of Props to your components. Start with type definitions for the
+shapes that come from the system (using Graphql?, generate those types from the
+schema and your queries!). This is the starting point. Then sketch out your leaf
+components and the Props they will likely need. Define types for those Props. Now
+you're almost done...
+
+Joking aside, in the UI, the Types are the "tables" and the component hierarchy,
+hooks (or other state/behaviors) are the flowchart. Many times, the flow becomes
+obvious once you have well defined tables.
+
+# Why do you have brakes on your car?
+
+Someone smarter than I asked and answered this question. Hint: it is no to slow
+you down. It is to enable you to go faster in a safe way. This applys to automated
+testing, but you can consider Types to be the same thing, a leverage of computers
+to help you build faster.
