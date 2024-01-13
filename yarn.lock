@@ -117,6 +117,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@astrojs/prism@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@astrojs/prism@npm:3.0.0"
+  dependencies:
+    prismjs: ^1.29.0
+  checksum: 84d014943a81534e033a4b286c827eccb7600b51332bcddc06bd174e88c8cb3a6d31dcb691346cf1f0ea6e817dacbfa52a945081e413cc87e3b1449272237e02
+  languageName: node
+  linkType: hard
+
 "@astrojs/react@npm:^2.2.1":
   version: 2.2.1
   resolution: "@astrojs/react@npm:2.2.1"
@@ -1846,6 +1855,7 @@ __metadata:
   resolution: "@corr-hq/web-ui@workspace:apps/web-ui"
   dependencies:
     "@astrojs/mdx": ^0.19.7
+    "@astrojs/prism": ^3.0.0
     "@astrojs/react": ^2.2.1
     "@astrojs/tailwind": ^4.0.0
     "@corr-hq/react-demo": "*"
@@ -1853,6 +1863,8 @@ __metadata:
     "@types/react": ^18.2.15
     "@types/react-dom": ^18.2.7
     astro: ^2.7.1
+    astro-auto-import: ^0.4.2
+    astro-mdx-code-blocks: ^0.0.6
     react: ^18.2.0
     react-dom: ^18.2.0
     tailwindcss: ^3.3.2
@@ -2888,6 +2900,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.0.0":
+  version: 18.19.3
+  resolution: "@types/node@npm:18.19.3"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 58c4fa45a78fcec75c78182a4b266395905957633654eb0311c5f9c30ac15c179ea2287ab1af034e46c2db7bb0589ef0000ee64c1de8f568a0aad29eaadb100c
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -3539,6 +3560,27 @@ __metadata:
   bin:
     astring: bin/astring
   checksum: 6f034d2acef1dac8bb231e7cc26c573d3c14e1975ea6e04f20312b43d4f462f963209bc64187d25d477a182dc3c33277959a0156ab7a3617aa79b1eac4d88e1f
+  languageName: node
+  linkType: hard
+
+"astro-auto-import@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "astro-auto-import@npm:0.4.2"
+  dependencies:
+    "@types/node": ^18.0.0
+    acorn: ^8.8.0
+  peerDependencies:
+    astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
+  checksum: ab2b01b5bbd06017aa400195e4f37a6a63e0f9a9e6282ed4e20d09a86e6026cf2b537c90c870d29e1b21f4a0528aa537e2edd647d0990350b918b90a4f6ca608
+  languageName: node
+  linkType: hard
+
+"astro-mdx-code-blocks@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "astro-mdx-code-blocks@npm:0.0.6"
+  peerDependencies:
+    astro: ">=2.0.11"
+  checksum: d2a0e28d63bdb34c3fc214dfa3eac6ac7fc403bc0fa7da91803458b611a7104739de4a182b79157941e6c4a2ec81f511869d82cdcf0e22b7466cbd4fc0b905a4
   languageName: node
   linkType: hard
 
@@ -8220,7 +8262,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prismjs@npm:^1.28.0":
+"prismjs@npm:^1.28.0, prismjs@npm:^1.29.0":
   version: 1.29.0
   resolution: "prismjs@npm:1.29.0"
   checksum: 007a8869d4456ff8049dc59404e32d5666a07d99c3b0e30a18bd3b7676dfa07d1daae9d0f407f20983865fd8da56de91d09cb08e6aa61f5bc420a27c0beeaf93
@@ -9866,6 +9908,13 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: f53bfe97f7c8b2b6d23cf572750d4e7d1e0c5fff1c36d859d0ec84556a827b8785077bc27676bf7e71fae538e517c3ecc0f37e7f593be913d884805d931bc8be
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
   languageName: node
   linkType: hard
 

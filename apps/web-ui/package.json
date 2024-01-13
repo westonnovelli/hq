@@ -10,10 +10,13 @@
     "preview": "astro preview"
   },
   "devDependencies": {
+    "@astrojs/prism": "^3.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "astro": "^2.7.1",
+    "astro-auto-import": "^0.4.2",
+    "astro-mdx-code-blocks": "^0.0.6",
     "typescript": "^5.1.6"
   },
   "dependencies": {
