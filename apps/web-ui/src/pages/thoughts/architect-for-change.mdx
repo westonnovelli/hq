@@ -22,17 +22,21 @@ like:
 // form.tsx
 const [choice, setChoice] = React.useState<Thing | null>(null);
 
-<select onChange={(e) => void setChoice(e.target.value)}>
-  {options.map((option) => <option key={option.id} />}
-</select>
+return (
+  <>
+    <select onChange={(e) => void setChoice(e.target.value)}>
+      {options.map((option) => <option key={option.id} />}
+    </select>
 
-{Boolean(choice) && (
-    <div>
-       <Checkbox label="Users" />
-       ...
-       <Checkbox label="Rules" />
-    </div>
-)}
+    {Boolean(choice) && (
+      <div>
+         <Checkbox label="Users" />
+         ...
+         <Checkbox label="Rules" />
+      </div>
+    )}
+  </>
+)
 ```
 
 Now, there's all sorts of ways in which you might architect this component and
@@ -168,18 +172,118 @@ the visuals. This is in alignment with the container/component pattern and works
 for this situation. The challenge begins to arise as the requirements evolve
 (in a contrived way, of course) and as the scale increases.
 
-The story continues, now, in addition to the user count, we want the user to be
+The story continues. Now, in addition to the user count, we want the user to be
 able to click on that count and see the list of user's names and emails.
 
 Perhaps you can see how this starts to challenge the pure container/component
 pattern. The pattern will still support this change, but doesn't seem to "thrive"
 with it. Consider the changes required to support this change.
 
-- the container needs a new hook for fetching the list of users
-- the container needs a new state value for determining if the user list "modal"
+1. the container needs a new hook for fetching the list of users
+2. the container needs a new state value for determining if the user list "modal"
 is open/closed
-- a new presentational component is needed to display the user list
+3. new presentational component is needed to display the user list
 
 What if that list is long and needs to be virtualized, or paginated? What if 
 that list should be searchable/filterable so a user can quickly be found?
+
+All this complexity ends up needing to be at the container level. You likely 
+end up creating a few intermediary components that handle some of the specifics
+that can be separated, but in the end you will have a complicated container for 
+the sake of keeping your presentational components simple. You will also face a
+props passing handful -I'm not one to shy from verboseness, but changesets become
+challenging to review, etc when you have to pass values around- which you might 
+end up reaching for a context or other tool to simplify that syntax.
+
+None of this is to claim the container/component pattern is bad, but rather, we
+have tools today that allow us to do better.
+
+Consider an alternative. The complexity really began to present itself when we 
+added the "enrichment" to the checkboxes. What happens if we let the enrichment
+stay just that, an enrichment?
+
+The "container" still resembles the sketch from before:
+
+```tsx
+// /src/FormContainer.tsx
+const { things, loading } = useThings();
+const [choice, setChoice] = React.useState<Thing | null>(null);
+
+return (
+    <ThingSelect 
+      options={things}
+      choice={choice}
+      setChoice(setChoice)
+      disabled={loading}
+    />
+    {Boolean(choice) && (
+      <div>
+        <Checkbox label="Users" />
+        ...
+        <Checkbox label="Rules" />
+      </div>
+    )}
+    {isUsersSelected && (
+      <UserCount thingId={choice.id} />
+    )}
+)
+```
+
+The main difference is that the `<UserCount>` component is not purely presentational,
+it will do all the work it needs to itself, given a `thing` id.
+
+```tsx
+// /src/UserCount.tsx
+const { userCount, loading } = useUserCount(choice.id);
+
+if (loading) return <Spinner />;
+
+return (
+  <span>{userCount} users will be included</span>
+)
+```
+
+That's not too bad. And further, as the UserCount enrichment expands in functionality
+the parent form does not need to change.
+
+```tsx
+// /src/UserCount.tsx
+const { userCount, loadingCount } = useUserCount(choice.id);
+const { userNames, loadingNames } = useUserNames(choice.id);
+const [open, setOpen] = React.useState(false);
+
+if (loadingNames || loadingCount) return <Spinner />;
+
+return (
+  <>
+    <Button
+      onClick={() => void setOpen((prev) => !prev)
+    >
+      {userCount} user(s) will be included
+    <Button>
+    {open && (
+      <Dialog>
+        {userNames.map(({name, email}) => (
+          <span key={email}>{name} - {email}</span>
+        ))}
+      <Dialog>
+    )}
+  </>
+)
+```
+
+Beyond that, as the other checkboxes in the form receive enrichments, the form
+maintains a relatively simple implementation, concerning itself with primarily
+the rendering and management of the form. Extended behaviors, data, and concerns
+are deferred to children.
+
+Its worth mentioning that resuse is all too often a red hering for React applications.
+We all _want_ to be writing reusable components, but even if we do, how often
+are they actually reused? Many times the composable parts of the component end up
+being more useful. This is a big part of what made hooks so successful. The component
+boundary is useful for more than just reusing wholesale, it allows for a separation
+(and often a decoupling) of concerns. The UI is fundamentally a convergence of many 
+concens that can otherwise be kept separate throughout the system. I think we should
+pay close attention to what the concerns of the UI are per situation, rather than
+assuming the traditional concerns are appropriate.
 
