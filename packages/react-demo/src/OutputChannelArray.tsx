@@ -44,7 +44,7 @@ const OutputChannelArray: React.FC<ArrayProps> = ({ routing }) => {
     return (
          <Box display="flex" flexDirection="column">
             {routing.map(({ channel, routed }) => (
-                <ChannelToggle key={channel.id} name="OC1" initialState={routed}/>
+                <ChannelToggle key={channel.id} name={`O${channel.id}`} initialState={routed}/>
             ))}
         </Box>
     );

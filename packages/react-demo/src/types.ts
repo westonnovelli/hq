@@ -1,6 +1,6 @@
 import { Option } from './type-utils';
 
-type ID = string;
+export type ID = string;
 
 export interface Channel {
     id: ID;

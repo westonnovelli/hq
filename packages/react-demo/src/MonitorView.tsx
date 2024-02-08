@@ -22,8 +22,11 @@ const MonitorView: React.FC = () => {
                     return (
                         <Channel
                             key={source.id}
+                            id={source.id}
                             label={source.label}
                             type={source.type}
+                            updateName={(newName) => dispatch({type: 'RENAME_CHANNEL', payload: {channelId: source.id, newName }})}
+                            toggleType={() => dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: source.id }})}
                         >
                             {routing.length > 0 && (
                                 <OutputChannelArray routing={routing} />
@@ -40,8 +43,11 @@ const MonitorView: React.FC = () => {
                     return (
                         <Channel
                             key={output.id}
+                            id={output.id}
                             label={output.label}
                             type={output.type}
+                            updateName={(newName) => dispatch({type: 'RENAME_CHANNEL', payload: {channelId: output.id, newName }})}
+                            toggleType={() => dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: output.id }})}
                         />
                     );
                 })}

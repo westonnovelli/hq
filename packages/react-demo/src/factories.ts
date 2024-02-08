@@ -5,7 +5,7 @@ export function newMonitor(): Monitor {
     return {
         sources: [],
         outputs: [],
-        solo: Option.None,
+        solo: Option.None(),
     };
 }
 
@@ -29,7 +29,7 @@ const DEFAULT_GAIN = 0;
 export function newChannel(): Channel {
     return {
         id: `${idGenerator.next().value}`,
-        label: '',
+        label: 'Unnamed',
         type: 'Virtual' as const,
         simpleGain: DEFAULT_GAIN,
         feed: {

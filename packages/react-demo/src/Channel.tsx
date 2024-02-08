@@ -8,16 +8,32 @@ import {
     SliderThumb,
     IconButton,
     Button,
+    Tooltip,
+    Editable,
+    EditablePreview,
+    EditableInput
 } from "@chakra-ui/react";
 import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
+import { ID } from './types';
 
 interface Props {
+    id: ID;
     label: string;
     type: 'Physical' | 'Virtual';
     initiallyMuted?: boolean;
+    updateName: (name: string) => void;
+    toggleType: () => void;
 }
 
-const Channel: React.FC<React.PropsWithChildren<Props>> = ({ label, type, initiallyMuted = false, children }) => {
+const Channel: React.FC<React.PropsWithChildren<Props>> = ({
+    id,
+    label,
+    type,
+    initiallyMuted = false,
+    updateName = () => {},
+    toggleType = () => {},
+    children
+}) => {
     const [muted, setMuted] = React.useState(initiallyMuted);
     return (
         <Box
@@ -28,8 +44,13 @@ const Channel: React.FC<React.PropsWithChildren<Props>> = ({ label, type, initia
             alignItems="center"
         >
             <Box textAlign="center">
-              <Text>{label}</Text>
-              <Text fontSize="xs" color="lightgrey">{type}</Text>
+              <Tooltip hasArrow label={id} bg="black" color="white" placement="top">
+                <Editable defaultValue={label} onSubmit={(e) => void updateName(e)} height="40px">
+                  <EditablePreview width="80px" whiteSpace="nowrap" overflowX="hidden"/>
+                  <EditableInput width="80px"/>
+                </Editable>
+              </Tooltip>
+              <Button variant="ghost" size="xs" color="lightgrey" onClick={() => void toggleType()}>{type}</Button>
             </Box>
             <Box display="flex">
             <Slider
