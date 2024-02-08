@@ -9,14 +9,14 @@ const MonitorView: React.FC = () => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
     return (
-    <Box>
+    <Box display="flex" flexDirection="column" gap="16px">
         <Box>
             <ChannelGroup name="Sources">
                 {state.monitor.sources.map((source) => {
                     const routing = state.monitor.outputs.map((channel) => ({
                         channel,
                         routed: Boolean(source.destinations.find(({ destination }) => {
-                            return destination.id === channel.id;
+                            return destination === channel.id;
                         }))
                     }));
                     return (
@@ -25,6 +25,7 @@ const MonitorView: React.FC = () => {
                             id={source.id}
                             label={source.label}
                             type={source.type}
+                            initiallyMuted={source.muted}
                             updateName={(newName) => dispatch({type: 'RENAME_CHANNEL', payload: {channelId: source.id, newName }})}
                             toggleType={() => dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: source.id }})}
                         >
@@ -46,6 +47,7 @@ const MonitorView: React.FC = () => {
                             id={output.id}
                             label={output.label}
                             type={output.type}
+                            initiallyMuted={output.muted}
                             updateName={(newName) => dispatch({type: 'RENAME_CHANNEL', payload: {channelId: output.id, newName }})}
                             toggleType={() => dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: output.id }})}
                         />

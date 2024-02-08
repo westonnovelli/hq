@@ -1,6 +1,7 @@
 import React from 'react';
-import { newMonitor, newSource, newOutput } from './factories';
+import { newChannel, newSource, newOutput } from './factories';
 import { ID, Monitor, Channel} from './types';
+import { Option } from './type-utils';
 
 interface State {
     monitor: Monitor;
@@ -32,7 +33,98 @@ const toggleType = (payload: { channelId: ID }) => <T extends Channel>(channel: 
 };
 
 export const initialState: State = {
-    monitor: newMonitor()
+    monitor: {
+        sources: [{
+            ...newChannel(),
+            id: 'source:1',
+            label: 'Mic',
+            type: 'Physical',
+            destinations: [{
+                gain: 0,
+                destination: 'B'
+            },{
+                gain: 0,
+                destination: 'C'
+            },{
+                gain: 0,
+                destination: 'D'
+            }],
+        },{
+            ...newChannel(),
+            id: 'source:2',
+            label: 'System',
+            type: 'Virtual',
+            destinations: [{
+                gain: 0,
+                destination: 'A'
+            },{
+                gain: 0,
+                destination: 'B'
+            },{
+                gain: 0,
+                destination: 'C'
+            }],
+        },{
+            ...newChannel(),
+            id: 'source:3',
+            label: 'Game',
+            type: 'Virtual',
+            destinations: [{
+                gain: 0,
+                destination: 'A'
+            }, {
+                gain: 0,
+                destination: 'B'
+            }],
+        },{
+            ...newChannel(),
+            id: 'source:4',
+            label: 'Music',
+            type: 'Virtual',
+            destinations: [{
+                gain: 0,
+                destination: 'A'
+            },{
+                gain: 0,
+                destination: 'B'
+            },{
+                gain: 0,
+                destination: 'C'
+            }],
+        },{
+            ...newChannel(),
+            id: 'source:5',
+            label: 'Comms In',
+            type: 'Virtual',
+            destinations: [{
+                gain: 0,
+                destination: 'B'
+            }],
+        }],
+        outputs: [{
+            ...newOutput(),
+            id: 'A',
+            label: 'Speakers',
+            type: 'Physical',
+            muted: true,
+        },{
+            ...newOutput(),
+            id: 'B',
+            label: 'Headset',
+            type: 'Physical',
+        },{
+            ...newOutput(),
+            id: 'C',
+            label: 'Stream',
+            type: 'Virtual',
+        },{
+            ...newOutput(),
+            id: 'D',
+            label: 'Comms Out',
+            type: 'Virtual',
+        }],
+        solo: Option.None(),
+    }
 };
 
 const reducer: React.Reducer<State, Action> = (state, action): State => {

@@ -20,7 +20,7 @@ export interface SourceChannel extends Channel {
 }
 
 export interface Routing {
-    destination: OutputChannel;
+    destination: OutputChannel['id'];
     gain: number;
 }
 
