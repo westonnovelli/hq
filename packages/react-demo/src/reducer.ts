@@ -1,6 +1,6 @@
 import React from 'react';
-import { newChannel, newSource, newOutput } from './factories';
-import { ID, Monitor, Channel} from './types';
+import { newSource, newOutput } from './factories';
+import { ID, Monitor, Channel, SourceChannel} from './types';
 import { Option } from './type-utils';
 
 interface State {
@@ -12,6 +12,8 @@ type Action =
     | { type: 'ADD_OUTPUT' }
     | { type: 'RENAME_CHANNEL', payload: { channelId: ID, newName: string; }}
     | { type: 'TOGGLE_TYPE', payload: { channelId: ID }}
+    | { type: 'REMOVE_CHANNEL', payload: { channelId: ID }}
+    | { type: 'SET_SUBCHANNEL', payload: { sourceId: ID, subchanneled: SourceChannel['subchanneled'] }}
 ;
 
 const rename = (payload: { channelId: ID; newName: string; }) => <T extends Channel>(channel: T) => {
@@ -32,10 +34,19 @@ const toggleType = (payload: { channelId: ID }) => <T extends Channel>(channel: 
     };
 };
 
+const setSource = (payload: { sourceId: ID, subchanneled: SourceChannel['subchanneled']}) => (source: SourceChannel) => {
+    if (source.id !== payload.sourceId) return source;
+
+    return {
+        ...source,
+        subchanneled: payload.subchanneled 
+    };
+};
+
 export const initialState: State = {
     monitor: {
         sources: [{
-            ...newChannel(),
+            ...newSource(),
             id: 'source:1',
             label: 'Mic',
             type: 'Physical',
@@ -50,7 +61,7 @@ export const initialState: State = {
                 destination: 'D'
             }],
         },{
-            ...newChannel(),
+            ...newSource(),
             id: 'source:2',
             label: 'System',
             type: 'Virtual',
@@ -65,7 +76,7 @@ export const initialState: State = {
                 destination: 'C'
             }],
         },{
-            ...newChannel(),
+            ...newSource(),
             id: 'source:3',
             label: 'Game',
             type: 'Virtual',
@@ -77,10 +88,11 @@ export const initialState: State = {
                 destination: 'B'
             }],
         },{
-            ...newChannel(),
+            ...newSource(),
             id: 'source:4',
             label: 'Music',
             type: 'Virtual',
+            subchanneled: 'independent',
             destinations: [{
                 gain: 0,
                 destination: 'A'
@@ -92,7 +104,7 @@ export const initialState: State = {
                 destination: 'C'
             }],
         },{
-            ...newChannel(),
+            ...newSource(),
             id: 'source:5',
             label: 'Comms In',
             type: 'Virtual',
@@ -170,6 +182,25 @@ const reducer: React.Reducer<State, Action> = (state, action): State => {
                     ...state.monitor,
                     sources: state.monitor.sources.map(toggleType(action.payload)),
                     outputs: state.monitor.outputs.map(toggleType(action.payload)),
+                },
+            };
+        }
+        case 'REMOVE_CHANNEL': {
+            return {
+                ...state,
+                monitor: {
+                    ...state.monitor,
+                    sources: state.monitor.sources.filter(({ id }) => id !== action.payload.channelId),
+                    outputs: state.monitor.outputs.filter(({ id }) => id !== action.payload.channelId),
+                },
+            };
+        }
+        case 'SET_SUBCHANNEL': {
+            return {
+                ...state,
+                monitor: {
+                    ...state.monitor,
+                    sources: state.monitor.sources.map(setSource(action.payload)),
                 },
             };
         }

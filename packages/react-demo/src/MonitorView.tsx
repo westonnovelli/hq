@@ -26,8 +26,16 @@ const MonitorView: React.FC = () => {
                             label={source.label}
                             type={source.type}
                             initiallyMuted={source.muted}
-                            updateName={(newName) => dispatch({type: 'RENAME_CHANNEL', payload: {channelId: source.id, newName }})}
-                            toggleType={() => dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: source.id }})}
+                            subchanneled={source.subchanneled}
+                            updateName={(newName) => void dispatch({type: 'RENAME_CHANNEL', payload: {channelId: source.id, newName }})}
+                            toggleType={() => void dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: source.id }})}
+                            remove={() => void dispatch({ type: 'REMOVE_CHANNEL', payload: { channelId: source.id }})}
+                            setSubchannel={
+                                () => void dispatch({
+                                    type: 'SET_SUBCHANNEL',
+                                    payload: { sourceId: source.id, subchanneled: source.subchanneled === 'off' ? 'independent' : 'off' }
+                                })
+                            }
                         >
                             {routing.length > 0 && (
                                 <OutputChannelArray routing={routing} />
@@ -50,6 +58,7 @@ const MonitorView: React.FC = () => {
                             initiallyMuted={output.muted}
                             updateName={(newName) => dispatch({type: 'RENAME_CHANNEL', payload: {channelId: output.id, newName }})}
                             toggleType={() => dispatch({ type: 'TOGGLE_TYPE', payload: { channelId: output.id }})}
+                            remove={() => void dispatch({ type: 'REMOVE_CHANNEL', payload: { channelId: output.id }})}
                         />
                     );
                 })}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button } from '@chakra-ui/react';
 import { OutputChannel } from './types';
+import { px } from 'framer-motion';
 
 interface Props {
     name: string;
@@ -16,6 +17,7 @@ const ChannelToggle: React.FC<Props> = ({ name, initialState = true }) => {
             variant={active ? 'outline' : 'ghost'}
             borderColor={active ? 'lime' : 'transparent'}
             color={active ? 'white' : 'gray'}
+            flexShrink={0}
         >{name}</Button>
     );
 };
@@ -42,10 +44,41 @@ interface ArrayProps {
 
 const OutputChannelArray: React.FC<ArrayProps> = ({ routing }) => {
     return (
-         <Box display="flex" flexDirection="column">
+    <Box position="relative">
+            {routing.length > 5 && (
+                <Box
+                    height="8px"
+                    width="100%"
+                    background="linear-gradient(180deg, gray, transparent)"
+                    position="absolute"
+                    top="0"
+                />
+            )}
+        <Box
+            display="flex"
+            flexDirection="column"
+            gap="2px"
+            overflowY="auto"
+            height="100%"
+            sx={{ 
+                '::-webkit-scrollbar': {
+                    display:'none'
+                }
+            }}
+        >
             {routing.map(({ channel, routed }) => (
                 <ChannelToggle key={channel.id} name={`O${channel.id}`} initialState={routed}/>
             ))}
+        </Box>
+            {routing.length > 5 && (
+                <Box
+                    height="8px"
+                    width="100%"
+                    background="linear-gradient(0deg, gray, transparent)"
+                    position="absolute"
+                    bottom="0"
+                />
+            )}
         </Box>
     );
 };

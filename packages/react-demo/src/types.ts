@@ -17,6 +17,7 @@ export interface Feed {
 
 export interface SourceChannel extends Channel {
     destinations: Routing[];
+    subchanneled: 'off' | 'independent'; // maybe add a relative
 }
 
 export interface Routing {

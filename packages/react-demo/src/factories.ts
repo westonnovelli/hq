@@ -12,6 +12,7 @@ export function newMonitor(): Monitor {
 export function newSource(): SourceChannel {
     return {
         ...newChannel(),
+        subchanneled: 'off',
         destinations: [],
     };
 }
