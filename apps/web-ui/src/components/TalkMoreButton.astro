@@ -1,0 +1,12 @@
+---
+---
+<button id="talk-more" class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200">Want to talk more?</button>
+<script>
+  document.getElementById('talk-more')?.addEventListener('click', () => {
+    if (typeof posthog !== 'undefined') {
+      posthog.capture('want_to_talk_more');
+    }
+    alert('Thanks for your interest!');
+  });
+</script>
+

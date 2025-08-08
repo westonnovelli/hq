@@ -11,6 +11,8 @@ interface Props {
 }
 
 const { location, title } = Astro.props;
+const POSTHOG_KEY = import.meta.env.PUBLIC_POSTHOG_KEY;
+const POSTHOG_HOST = import.meta.env.PUBLIC_POSTHOG_HOST ?? 'https://app.posthog.com';
 ---
 <html>
   <head>
@@ -19,6 +21,14 @@ const { location, title } = Astro.props;
     <Fonts />
     <link rel="icon" type="image/x-icon" href="/favicon.png">
     <title>Weston Novelli | {title} </title>
+    {POSTHOG_KEY && (
+      <>
+        <script src="https://cdn.posthog.com/posthog.js"></script>
+        <script is:inline>
+          posthog.init({JSON.stringify(POSTHOG_KEY)}, { api_host: {JSON.stringify(POSTHOG_HOST)} });
+        </script>
+      </>
+    )}
   </head>
   <body class="h-screen flex bg-color2">
     <Navbar location={location} class="hidden md:flex"/>
