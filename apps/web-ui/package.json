@@ -9,23 +9,12 @@
     "build": "astro build",
     "preview": "astro preview"
   },
-  "devDependencies": {
-    "@astrojs/prism": "^3.0.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "astro": "^2.7.1",
-    "astro-auto-import": "^0.4.2",
-    "astro-mdx-code-blocks": "^0.0.6",
-    "typescript": "^5.1.6"
-  },
   "dependencies": {
-    "@astrojs/mdx": "^0.19.7",
-    "@astrojs/react": "^2.2.1",
-    "@astrojs/tailwind": "^4.0.0",
-    "@corr-hq/react-demo": "*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.3.2"
+    "astro": "4.10.2",
+    "@astrojs/tailwind": "5.1.0",
+    "tailwindcss": "3.4.4"
+  },
+  "devDependencies": {
+    "typescript": "5.5.4"
   }
 }
