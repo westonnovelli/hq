@@ -25,7 +25,7 @@ const [choice, setChoice] = React.useState<Thing | null>(null);
 return (
   <>
     <select onChange={(e) => void setChoice(e.target.value)}>
-      {options.map((option) => <option key={option.id} />}
+      {options.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
     </select>
 
     {Boolean(choice) && (
@@ -71,7 +71,7 @@ return (
     <ThingSelect 
       options={things}
       choice={choice}
-      setChoice(setChoice)
+      setChoice={setChoice}
       disabled={loading}
     />
     {Boolean(choice) && (
@@ -86,7 +86,7 @@ return (
 
 To conceptualize the checkbox selection, the details of the state is rather
 arbitrary and may be informed by the server's expectations on the form submission.
-I'm not convinced its relevant to this exploration. To avoid disctraction,
+I'm not convinced it's relevant to this exploration. To avoid distraction,
 consider a derived value of `isUsersSelected` as a stand-in to represent the
 state relevant to first checkbox.
 
@@ -109,7 +109,7 @@ return (
     <ThingSelect 
       options={things}
       choice={choice}
-      setChoice(setChoice)
+      setChoice={setChoice}
       disabled={loading}
     />
     {Boolean(choice) && (
@@ -146,7 +146,7 @@ return (
     <ThingSelect 
       options={things}
       choice={choice}
-      setChoice(setChoice)
+      setChoice={setChoice}
       disabled={loading}
     />
     {Boolean(choice) && (
@@ -213,7 +213,7 @@ return (
     <ThingSelect 
       options={things}
       choice={choice}
-      setChoice(setChoice)
+      setChoice={setChoice}
       disabled={loading}
     />
     {Boolean(choice) && (
@@ -257,16 +257,16 @@ if (loadingNames || loadingCount) return <Spinner />;
 return (
   <>
     <Button
-      onClick={() => void setOpen((prev) => !prev)
+      onClick={() => void setOpen((prev) => !prev)}
     >
       {userCount} user(s) will be included
-    <Button>
+    </Button>
     {open && (
       <Dialog>
         {userNames.map(({name, email}) => (
           <span key={email}>{name} - {email}</span>
         ))}
-      <Dialog>
+      </Dialog>
     )}
   </>
 )
@@ -277,13 +277,13 @@ maintains a relatively simple implementation, concerning itself with primarily
 the rendering and management of the form. Extended behaviors, data, and concerns
 are deferred to children.
 
-Its worth mentioning that resuse is all too often a red hering for React applications.
+It's worth mentioning that reuse is all too often a red herring for React applications.
 We all _want_ to be writing reusable components, but even if we do, how often
 are they actually reused? Many times the composable parts of the component end up
 being more useful. This is a big part of what made hooks so successful. The component
 boundary is useful for more than just reusing wholesale, it allows for a separation
 (and often a decoupling) of concerns. The UI is fundamentally a convergence of many 
-concens that can otherwise be kept separate throughout the system. I think we should
+concerns that can otherwise be kept separate throughout the system. I think we should
 pay close attention to what the concerns of the UI are per situation, rather than
 assuming the traditional concerns are appropriate.
 
