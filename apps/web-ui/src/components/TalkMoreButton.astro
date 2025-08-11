@@ -1,12 +1,20 @@
 ---
+const TALK_MORE_SURVEY_ID = import.meta.env.PUBLIC_TALK_MORE_SURVEY_ID;
 ---
 <button id="talk-more" class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200">Want to talk more?</button>
-<script>
+<script is:inline>
+  const surveyId = {JSON.stringify(TALK_MORE_SURVEY_ID)};
   document.getElementById('talk-more')?.addEventListener('click', () => {
     if (typeof posthog !== 'undefined') {
       posthog.capture('want_to_talk_more');
+      if (surveyId && typeof posthog.startSurvey === 'function') {
+        posthog.startSurvey({ id: surveyId });
+      } else if (surveyId && typeof posthog.invoke === 'function') {
+        posthog.invoke('surveys.startSurvey', { id: surveyId });
+      }
+    } else {
+      alert('Thanks for your interest!');
     }
-    alert('Thanks for your interest!');
   });
 </script>
 
