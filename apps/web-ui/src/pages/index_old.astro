@@ -1,0 +1,67 @@
+---
+import PostHogLayout from '../layouts/PostHogLayout.astro';
+import Page from '../components/scaffold/page.astro';
+import Logo from '../components/Logo.astro';
+
+// Welcome to Astro! Everything between these triple-dash code fences
+// is your "component frontmatter". It never runs in the browser.
+console.log('This runs in your terminal, not the browser!');
+---
+<PostHogLayout>
+  <!-- Below is your "component template." It's just HTML, but with
+       some magic sprinkled in to help you build great templates. -->
+  <Page location="Home" title="Getting Started">
+    <div class="mx-auto pb-5 flex flex-col items-center">
+      <!--           <div class="text-5xl py-2">WN</div>-->
+      <Logo height={200} width={200} />
+      <div class="text-3xl text-neutral-100">Weston Novelli</div>
+      <div class="text-sm text-neutral-100">Staff Software Engineer - UI</div>
+    </div>
+    <div class="flex flex-col lg:flex-row w-full gap-2">
+      <div class="basis-0 lg:basis-4/6">
+        <div class="p-4 bg-color1 rounded text-neutral-100">
+          <p class="text-xl">I build <span class="underline decoration-color4">UI</span>s for the <span class="underline decoration-color4">web</span>.</p>
+          <div class="mt-4 pt-8 pb-4 border-t border-color4 flex justify-evenly">
+            <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200" href="/profile">Profile</a>
+            <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200" href="/showcase">Showcase</a>
+            <a class="px-4 py-2 rounded bg-color3 hover:shadow-lg hover:saturate-200" href="/thoughts">Thoughts</a>
+          </div>
+          <div class="mt-4 border-t border-color4">
+            <div class="flex mt-4 mb-1"><div class="bg-color4 p-1 text-xs text-neutral-950 rounded">Mission</div></div>
+            <p>
+              With primary experience building enterprise apps for the web, I target building tools that help people do their jobs.
+              This means the UIs must be quality, performant, and strike the balance between simple and sophisticated. Let's get to work!
+            </p>
+            <div class="flex mt-4 mb-1"><div class="bg-color4 p-1 text-xs text-neutral-950 rounded">Approach</div></div>
+            <p>
+              From rapid prototyping to structured architecture documents and records, different project require different processes.
+              I've worked in a wide variety of project approaches. The saying <span class="italic bg-color2 px-1 rounded">use the right tool for the job</span> extends to
+              process and strategy. I find it valuable to understand the purpose behind different processes and use that understanding
+              to tailor the approach to the project. Do what is necessary, but don't waste time.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="basis-0 lg:basis-2/6 flex flex-col gap-2">
+        <div class="p-4 bg-color1 rounded text-neutral-100">
+          <h2 class="font-semibold mb-2">Why the UI Engineer?</h2>
+          <p>The UI Engineer is optimally placed as the joint between <span class="underline decoration-color4">Product</span>, <span class="underline decoration-color4">Design</span>, and the rest of <span class="underline decoration-color4">Engineering</span>.
+             We thrive when we have the whole picture of the Product Delivery journey.
+          </p>
+        </div>
+        <div class="p-4 bg-color1 rounded text-neutral-100">
+          <h2 class="font-semibold mb-2">Why the Web?</h2>
+          <p>The web, as a platform, provides development teams the ability to build an evergreen product for the customers. This allows for faster iteration cycles
+            compared to alternatives. Fast iterations mean feedback from the market earlier, enabling the business to tailor the offering toward value
+            - to both the customer and the business!
+          </p>
+          <br>
+          <p>
+            Further, browsers themselves have come a long way in the last couple of decades, now providing relatively well documented APIs and vast ecosystems
+            of knowledge and tooling.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Page>
+</PostHogLayout>

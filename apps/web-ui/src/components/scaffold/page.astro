@@ -1,9 +1,6 @@
 ---
+import BaseLayout from './base-layout.astro';
 import type { routes } from '../../routes.ts';
-
-import Fonts from './fonts.astro'
-import Navbar from '../navbar.astro'
-import Header from '../header.astro'
 
 interface Props {
     location: routes;
@@ -12,49 +9,7 @@ interface Props {
 
 const { location, title } = Astro.props;
 ---
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width" />
-    <Fonts />
-    <link rel="icon" type="image/x-icon" href="/favicon.png">
-    <title>Weston Novelli | {title} </title>
-  </head>
-  <body class="h-screen flex bg-color2">
-    <Navbar location={location} class="hidden md:flex"/>
-    <aside id="grid-left" class="hidden fixed max-w-xs transition-opacity opacity-0">
-        <Navbar location={location} short={true}/>
-    </aside>
-    <div class="px-2 pb-4 h-full w-full flex flex-col bg-color2 overflow-auto">
-      <div class="container mx-auto">
-       <Header>{title}</Header> 
-       <main id="content">
-           <slot/>
-       </main>
-    </div>
-  </body>
-</html>
-
-<style>
-  body {
-    font-family: 'Rubik', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-
-  @media (max-width: 767.5px) /* only at less than md */ {
-      .mobile-sidebar-toggle {
-          overflow: hidden;
-          height: 100vh;
-      }
-
-      .mobile-sidebar-toggle #grid-left {
-          opacity: 1;
-          z-index: 20;
-          display: flex;
-          width: 100vw;
-          height: 100vh;
-      }
-  }
-</style>
+<BaseLayout location={location} title={title}>
+    <slot/>
+</BaseLayout>
 

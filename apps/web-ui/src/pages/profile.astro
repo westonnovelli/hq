@@ -1,37 +1,38 @@
 ---
+import PostHogLayout from '../layouts/PostHogLayout.astro';
 import Page from '../components/scaffold/page.astro';
-
 ---
-<Page location="Profile" title="Installation">
-<div class="container flex flex-col gap-4">
-<p class="text-neutral-100 my-4">Let's start with a list of the features and technologies I've worked with.</p>
+<PostHogLayout>
+  <Page location="Profile" title="Installation">
+    <div class="container flex flex-col gap-4">
+      <p class="text-neutral-100 my-4">Let's start with a list of the features and technologies I've worked with.</p>
 
-<div class="bg-color1 rounded p-4 grid md:grid-cols-2 gap-4">
-  <div>
-    <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Features</h2></div>
-    <p class="text-neutral-100 mb-4">Search pages, document viewers, video players, charts and graphs, file uploading, AI, and more.</p>   
-  </div>
-  <div>
-    <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Technical</h2></div>
-    <p class="text-neutral-100 mb-4">Typescript, graphql, optimsitic UI, virtual-scrolling, video streaming, pdf rendering, styled-components, to name a few.</p>
-  </div>
-  <div>
-    <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Frameworks & Architecture</h2></div>
-    <p class="text-neutral-100 mb-4">React, Microfrontends, Node, Nextjs, Astro</p>
-  </div>
-  <div>
-    <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Infrastructure & Build Tooling & Testing</h2></div>
-    <p class="text-neutral-100 mb-4">Webpack, babel, esbuild, docker, storybook, cypress/playwright, jest, turborepo, AWS...</p>
-  </div>
-</div>
+      <div class="bg-color1 rounded p-4 grid md:grid-cols-2 gap-4">
+        <div>
+          <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Features</h2></div>
+          <p class="text-neutral-100 mb-4">Search pages, document viewers, video players, charts and graphs, file uploading, AI, and more.</p>   
+        </div>
+        <div>
+          <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Technical</h2></div>
+          <p class="text-neutral-100 mb-4">Typescript, graphql, optimsitic UI, virtual-scrolling, video streaming, pdf rendering, styled-components, to name a few.</p>
+        </div>
+        <div>
+          <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Frameworks & Architecture</h2></div>
+          <p class="text-neutral-100 mb-4">React, Microfrontends, Node, Nextjs, Astro</p>
+        </div>
+        <div>
+          <div><h2 class="text-neutral-900 text-lg p-1 rounded bg-color4 inline">Infrastructure & Build Tooling & Testing</h2></div>
+          <p class="text-neutral-100 mb-4">Webpack, babel, esbuild, docker, storybook, cypress/playwright, jest, turborepo, AWS...</p>
+        </div>
+      </div>
 
-<div class="bg-color1 rounded p-4 text-neutral-100">
-  <p>Need it built fast? Roger, I've worked in startup environments, and focus teams with the goal of rapid delivery, interative design, and experimentation.</p>
-  <br/>
-  <p>Need it built rigorously? Roger, I've worked in high structure environments targeting well documented architectural designs, multi-review cycles, and well verified solutions.</p>
-  <br/>
-  <p>The business needs to use the right tool for the job, the engineer's skill is to help identify that tool and use it proficiently. I've worked to expand my skillset across a spectrum of technologies to solve a wide variety of problems.</p>
-</div>
-</div>
-</Page>
-
+      <div class="bg-color1 rounded p-4 text-neutral-100">
+        <p>Need it built fast? Roger, I've worked in startup environments, and focus teams with the goal of rapid delivery, interative design, and experimentation.</p>
+        <br/>
+        <p>Need it built rigorously? Roger, I've worked in high structure environments targeting well documented architectural designs, multi-review cycles, and well verified solutions.</p>
+        <br/>
+        <p>The business needs to use the right tool for the job, the engineer's skill is to help identify that tool and use it proficiently. I've worked to expand my skillset across a spectrum of technologies to solve a wide variety of problems.</p>
+      </div>
+    </div>
+  </Page>
+</PostHogLayout>
