@@ -4,7 +4,6 @@ const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
 
 // Debug logging
 console.log('PostHog Key loaded:', posthogKey ? 'Yes' : 'No');
-console.log('PostHog Key value:', posthogKey);
 
 if (!posthogKey) {
   console.warn('PostHog API key not found. Please set PUBLIC_POSTHOG_KEY environment variable.');

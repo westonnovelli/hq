@@ -1,4 +1,4 @@
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import AutoImport from 'astro-auto-import';
@@ -18,9 +18,6 @@ export default defineConfig({
         mdx()
     ],
     site: 'https://weston.novelli.dev',
-    outDir: '../../dist',
-    env: {
-        PUBLIC_POSTHOG_KEY: envField.string({ context: "client", access: "public", optional: true }),
-    }
+    outDir: '../../dist'
 });
 
