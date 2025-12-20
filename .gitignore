@@ -11,6 +11,15 @@
 #.pnp.*
 
 .turbo
+dist/
 dist
 node_modules
 .env
+
+# Build artifacts
+.astro/
+*.tsbuildinfo
+build/
+.output/
+.next/
+.cache/

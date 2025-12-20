@@ -10,19 +10,20 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "@astrojs/prism": "^3.0.0",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/node": "^9.5.1",
+    "@astrojs/prism": "^3.3.0",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/tailwind": "^6.0.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "astro": "^2.7.1",
-    "astro-auto-import": "^0.4.2",
+    "astro": "^5.16.6",
+    "astro-auto-import": "^0.4.5",
     "astro-mdx-code-blocks": "^0.0.6",
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.19.7",
-    "@astrojs/react": "^2.2.1",
-    "@astrojs/tailwind": "^4.0.0",
     "@corr-hq/react-demo": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

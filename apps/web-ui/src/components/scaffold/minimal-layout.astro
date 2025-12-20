@@ -3,9 +3,31 @@ import Fonts from './fonts.astro'
 
 interface Props {
     title: string;
+    noPrefix?: boolean;
+    themeColors?: [string, string, string];
 }
 
-const { title } = Astro.props;
+// Calculate lighter link color from theme
+function getLinkColor(themeColor: string): string {
+    // Convert hex to RGB, lighten it, and convert back
+    const hex = themeColor.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    // Lighten by mixing with white (70% original, 30% white)
+    const lightR = Math.min(255, Math.round(r + (255 - r) * 0.3));
+    const lightG = Math.min(255, Math.round(g + (255 - g) * 0.3));
+    const lightB = Math.min(255, Math.round(b + (255 - b) * 0.3));
+    return `rgb(${lightR}, ${lightG}, ${lightB})`;
+}
+
+const { title, noPrefix = false, themeColors } = Astro.props;
+const documentTitle = noPrefix ? title : `Weston Novelli | ${title}`;
+const linkColor = themeColors ? getLinkColor(themeColors[1]) : '#93c5fd';
+const linkHoverColor = themeColors ? getLinkColor(themeColors[0]) : '#bfdbfe';
+const bodyStyle = themeColors 
+    ? `--theme-link: ${linkColor}; --theme-link-hover: ${linkHoverColor}; background: linear-gradient(to bottom, ${themeColors[0]}, ${themeColors[1]}, ${themeColors[2]});`
+    : '';
 ---
 <html>
   <head>
@@ -13,9 +35,9 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <Fonts />
     <link rel="icon" type="image/x-icon" href="/favicon.png">
-    <title>Weston Novelli | {title} </title>
+    <title>{documentTitle}</title>
   </head>
-  <body class="bg-gradient-to-b from-color2 via-color3 to-color1">
+  <body class={themeColors ? '' : 'bg-gradient-to-b from-color2 via-color3 to-color1'} style={bodyStyle}>
     <slot/>
   </body>
 </html>

@@ -1,0 +1,342 @@
+---
+import PostHogLayout from '../../components/scaffold/PostHogLayout.astro';
+import MinimalLayout from "../../components/scaffold/minimal-layout.astro";
+
+const { slug } = Astro.params;
+const API_URL = import.meta.env.PUBLIC_SNIPPETS_API_URL || 'https://api.weston.novelli.dev';
+
+// This route is handled client-side, so we need to tell Astro not to prerender it
+export const prerender = false;
+
+// Color themes: [from, via, to]
+const colorThemes = {
+    blue: ['#536C98', '#2F7BE3', '#434E5F'],
+    green: ['#4A7C59', '#2ECC71', '#27AE60'],
+    red: ['#8B4A5C', '#E74C3C', '#C0392B'],
+    purple: ['#6B5B95', '#9B59B6', '#8E44AD'],
+    yellow: ['#B7950B', '#F1C40F', '#F39C12'],
+    orange: ['#D35400', '#E67E22', '#E74C3C'],
+    teal: ['#16A085', '#1ABC9C', '#138D75'],
+    pink: ['#C44569', '#E91E63', '#AD1457'],
+    indigo: ['#5B6C9D', '#6C5CE7', '#5F3DC4'],
+    cyan: ['#0E7490', '#06B6D4', '#0891B2'],
+};
+
+// Hash function to consistently map slug to a theme
+function hashString(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+}
+
+// Get theme based on slug
+const themeKeys = Object.keys(colorThemes);
+const themeIndex = hashString(slug || 'default') % themeKeys.length;
+const selectedTheme = themeKeys[themeIndex] as keyof typeof colorThemes;
+const themeColors = colorThemes[selectedTheme];
+---
+
+<PostHogLayout>
+    <MinimalLayout title="Snippet" noPrefix themeColors={themeColors}>
+        <div class="min-h-screen flex items-center justify-center px-4 py-16">
+            <div class="max-w-4xl w-full">
+                <!-- Loading State -->
+                <div id="loading-state" class="bg-white/15 backdrop-blur-sm rounded-2xl p-8 border border-white/25 shadow-2xl">
+                    <div class="flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+                        <span class="ml-4 text-white text-lg">Loading snippet...</span>
+                    </div>
+                </div>
+
+                <!-- Not Found State (404) -->
+                <div id="not-found-state" class="hidden bg-white/15 backdrop-blur-sm rounded-2xl p-8 border border-white/25 shadow-2xl">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🔍</div>
+                        <h1 class="text-3xl font-bold text-white mb-4">Snippet Not Found</h1>
+                        <p class="text-white/90 text-lg">The snippet you're looking for doesn't exist.</p>
+                    </div>
+                </div>
+
+                <!-- Expired State (410) -->
+                <div id="expired-state" class="hidden bg-white/15 backdrop-blur-sm rounded-2xl p-8 border border-white/25 shadow-2xl">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">⏰</div>
+                        <h1 class="text-3xl font-bold text-white mb-4">Snippet Expired</h1>
+                        <p class="text-white/90 text-lg mb-2">This snippet has expired and is no longer available.</p>
+                        <p id="expired-date" class="text-white/70 text-sm"></p>
+                    </div>
+                </div>
+
+                <!-- Broken/Error State -->
+                <div id="broken-state" class="hidden bg-white/15 backdrop-blur-sm rounded-2xl p-8 border border-white/25 shadow-2xl">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">⚠️</div>
+                        <h1 class="text-3xl font-bold text-white mb-4">Error Loading Snippet</h1>
+                        <p class="text-white/90 text-lg mb-2">Something went wrong while loading the snippet.</p>
+                        <p id="error-message" class="text-white/70 text-sm"></p>
+                    </div>
+                </div>
+
+                <!-- Content State -->
+                <div id="content-state" class="hidden">
+                    <div class="bg-white/20 backdrop-blur-md rounded-3xl p-12 border border-white/30 shadow-2xl">
+                        <!-- Title -->
+                        <div id="snippet-title-container" class="hidden mb-8">
+                            <h1 id="snippet-title" class="text-4xl font-bold text-white mb-2"></h1>
+                        </div>
+
+                        <!-- Metadata - Hidden -->
+                        <div class="hidden mb-6 text-white/70 text-sm flex flex-wrap gap-4">
+                            <span id="snippet-created"></span>
+                            <span id="snippet-expires"></span>
+                        </div>
+
+                        <!-- Content -->
+                        <div id="snippet-content" class="prose prose-invert prose-lg max-w-none text-white"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MinimalLayout>
+</PostHogLayout>
+
+<!-- Load marked from CDN for markdown rendering -->
+<script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+
+<script define:vars={{ slug, apiUrl: API_URL }}>
+    (function() {
+        const states = {
+            loading: document.getElementById('loading-state'),
+            notFound: document.getElementById('not-found-state'),
+            expired: document.getElementById('expired-state'),
+            broken: document.getElementById('broken-state'),
+            content: document.getElementById('content-state'),
+        };
+
+        const contentElements = {
+            titleContainer: document.getElementById('snippet-title-container'),
+            title: document.getElementById('snippet-title'),
+            created: document.getElementById('snippet-created'),
+            expires: document.getElementById('snippet-expires'),
+            content: document.getElementById('snippet-content'),
+            expiredDate: document.getElementById('expired-date'),
+            errorMessage: document.getElementById('error-message'),
+        };
+
+        function showState(stateName) {
+            // Hide all states
+            Object.values(states).forEach(state => {
+                if (state) state.classList.add('hidden');
+            });
+            // Show requested state
+            if (states[stateName]) {
+                states[stateName].classList.remove('hidden');
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+        }
+
+        async function loadSnippet() {
+            try {
+                const response = await fetch(`${apiUrl}/api/snippets/${slug}`);
+
+                if (response.status === 404) {
+                    showState('notFound');
+                    return;
+                }
+
+                if (response.status === 410) {
+                    const errorData = await response.json().catch(() => ({}));
+                    if (errorData.expiresAt) {
+                        contentElements.expiredDate.textContent = `Expired on: ${formatDate(errorData.expiresAt)}`;
+                    }
+                    showState('expired');
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const snippet = await response.json();
+
+                // Fallback check: if expiresAt is in the past, treat as expired
+                if (snippet.expiresAt && new Date(snippet.expiresAt) < new Date()) {
+                    contentElements.expiredDate.textContent = `Expired on: ${formatDate(snippet.expiresAt)}`;
+                    showState('expired');
+                    return;
+                }
+
+                // Render snippet content
+                if (snippet.title) {
+                    contentElements.title.textContent = snippet.title;
+                    contentElements.titleContainer.classList.remove('hidden');
+                } else {
+                    contentElements.titleContainer.classList.add('hidden');
+                }
+
+                if (snippet.createdAt) {
+                    contentElements.created.textContent = `Created: ${formatDate(snippet.createdAt)}`;
+                }
+
+                if (snippet.expiresAt) {
+                    contentElements.expires.textContent = `Expires: ${formatDate(snippet.expiresAt)}`;
+                }
+
+                // Render content based on format
+                const renderContent = () => {
+                    if (snippet.format === 'markdown') {
+                        // Use marked to render markdown
+                        const markedLib = typeof marked !== 'undefined' ? marked : (typeof window !== 'undefined' && window.marked);
+                        if (markedLib && typeof markedLib.parse === 'function') {
+                            contentElements.content.innerHTML = markedLib.parse(snippet.body);
+                            showState('content');
+                        } else {
+                            // Wait a bit for CDN script to load if needed
+                            setTimeout(() => {
+                                const retryMarked = typeof marked !== 'undefined' ? marked : (typeof window !== 'undefined' && window.marked);
+                                if (retryMarked && typeof retryMarked.parse === 'function') {
+                                    contentElements.content.innerHTML = retryMarked.parse(snippet.body);
+                                } else {
+                                    // Final fallback - show as plain text
+                                    contentElements.content.textContent = snippet.body;
+                                    contentElements.content.style.whiteSpace = 'pre-wrap';
+                                }
+                                showState('content');
+                            }, 100);
+                        }
+                    } else {
+                        // Plain text - preserve whitespace
+                        contentElements.content.textContent = snippet.body;
+                        contentElements.content.style.whiteSpace = 'pre-wrap';
+                        contentElements.content.style.fontFamily = 'monospace';
+                        showState('content');
+                    }
+                };
+
+                renderContent();
+            } catch (error) {
+                console.error('Error loading snippet:', error);
+                contentElements.errorMessage.textContent = error.message || 'An unexpected error occurred';
+                showState('broken');
+            }
+        }
+
+        // Start loading when page loads
+        loadSnippet();
+    })();
+</script>
+
+<style>
+    /* Enhanced snippet content styling */
+    #snippet-content {
+        font-size: 1.125rem;
+        line-height: 1.75;
+    }
+
+    /* Markdown styling */
+    #snippet-content :global(h1),
+    #snippet-content :global(h2),
+    #snippet-content :global(h3),
+    #snippet-content :global(h4),
+    #snippet-content :global(h5),
+    #snippet-content :global(h6) {
+        color: white;
+        font-weight: bold;
+        margin-top: 1.5em;
+        margin-bottom: 0.75em;
+    }
+
+    #snippet-content :global(h1) { 
+        font-size: 2.5em; 
+        line-height: 1.2;
+    }
+    #snippet-content :global(h2) { 
+        font-size: 2em; 
+        line-height: 1.3;
+    }
+    #snippet-content :global(h3) { 
+        font-size: 1.5em; 
+        line-height: 1.4;
+    }
+
+    #snippet-content :global(p) {
+        margin-bottom: 1.25em;
+        line-height: 1.75;
+        font-size: 1.125rem;
+    }
+
+    #snippet-content :global(ul),
+    #snippet-content :global(ol) {
+        margin-left: 1.5em;
+        margin-bottom: 1.25em;
+    }
+
+    #snippet-content :global(li) {
+        margin-bottom: 0.75em;
+        line-height: 1.75;
+    }
+
+    #snippet-content :global(code) {
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 0.25em 0.5em;
+        border-radius: 0.375rem;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 0.95em;
+    }
+
+    #snippet-content :global(pre) {
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 1.25em;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        margin-bottom: 1.5em;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #snippet-content :global(pre code) {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    #snippet-content :global(blockquote) {
+        border-left: 4px solid rgba(255, 255, 255, 0.4);
+        padding-left: 1.5em;
+        margin-left: 0;
+        margin-bottom: 1.5em;
+        font-style: italic;
+        opacity: 0.95;
+    }
+
+    #snippet-content :global(a) {
+        color: var(--theme-link, #93c5fd);
+        text-decoration: underline;
+        transition: color 0.2s;
+    }
+
+    #snippet-content :global(a:hover) {
+        color: var(--theme-link-hover, #bfdbfe);
+    }
+
+    #snippet-content :global(strong) {
+        font-weight: 700;
+        color: white;
+    }
+
+    #snippet-content :global(em) {
+        font-style: italic;
+    }
+</style>
