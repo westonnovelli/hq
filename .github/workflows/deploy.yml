@@ -18,7 +18,7 @@ jobs:
     environment: github-pages
     env:
       PUBLIC_POSTHOG_KEY: ${{ secrets.PUBLIC_POSTHOG_KEY }}
-      PUBLIC_SNIPPETS_API_URL: ${{ secrets.PUBLIC_SNIPPET_API_URL }}
+      PUBLIC_SNIPPETS_API_URL: ${{ secrets.PUBLIC_SNIPPETS_API_URL }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
