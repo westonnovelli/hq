@@ -4,10 +4,12 @@ import SnippetViewer from '../../components/SnippetViewer.astro';
 const { slug } = Astro.params;
 const API_URL = import.meta.env.PUBLIC_SNIPPETS_API_URL || 'https://api.weston.novelli.dev';
 
-// For static output, we need getStaticPaths even if we return empty array
-// All /s/* routes will be handled by the 404 page
+// For GitHub Pages, we need to generate at least one static HTML file
+// We'll use client-side routing to extract the slug from the URL
 export async function getStaticPaths() {
-    return [];
+    // Generate a catch-all route - this will create /s/index.html
+    // The SnippetViewer component will extract the actual slug from the URL client-side
+    return [{ params: { slug: 'index' } }];
 }
 ---
 

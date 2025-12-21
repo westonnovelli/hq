@@ -110,6 +110,17 @@ const themeColors = colorThemes[selectedTheme];
 
 <script define:vars={{ slug, apiUrl }}>
     (function() {
+        // Extract slug from URL (for GitHub Pages 404.html fallback)
+        // Always prefer the URL slug over the passed slug parameter
+        let finalSlug = slug;
+        const pathMatch = window.location.pathname.match(/^\/s\/(.+)$/);
+        if (pathMatch && pathMatch[1] && pathMatch[1] !== 'index') {
+            finalSlug = pathMatch[1];
+        } else if (!finalSlug || finalSlug === 'index') {
+            // Fallback: use passed slug if URL doesn't have one
+            finalSlug = slug || '';
+        }
+        
         const states = {
             loading: document.getElementById('loading-state'),
             notFound: document.getElementById('not-found-state'),
@@ -151,8 +162,13 @@ const themeColors = colorThemes[selectedTheme];
         }
 
         async function loadSnippet() {
+            if (!finalSlug) {
+                showState('notFound');
+                return;
+            }
+            
             try {
-                const response = await fetch(`${apiUrl}/api/snippets/${slug}`);
+                const response = await fetch(`${apiUrl}/api/snippets/${finalSlug}`);
 
                 if (response.status === 404) {
                     showState('notFound');
